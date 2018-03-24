@@ -144,8 +144,9 @@ int main(int argc, char **argv)
   if (args.use_ros_control)
   {
     LOG_INFO("ROS control enabled");
-    TrajectoryFollower traj_follower(*rt_commander, local_ip, args.reverse_port, factory.isVersion3());
-    controller = new ROSController(*rt_commander, traj_follower, args.joint_names, args.max_vel_change, args.tcp_link);
+    TrajectoryFollower *traj_follower = new TrajectoryFollower(
+        *rt_commander, local_ip, args.reverse_port, factory.isVersion3());
+    controller = new ROSController(*rt_commander, *traj_follower, args.joint_names, args.max_vel_change, args.tcp_link);
     rt_vec.push_back(controller);
     services.push_back(controller);
   }
